@@ -1,8 +1,7 @@
-leidenalg
+libleidenalg
 ==============
 
-This package implements the Leiden algorithm in ``C++`` and exposes it to
-``python``.  It relies on ``(python-)igraph`` for it to function. Besides the
+This package implements the Leiden algorithm in ``C++``.  It relies on ``igraph`` for it to function. Besides the
 relative flexibility of the implementation, it also scales well, and can be run
 on graphs of millions of nodes (as long as they can fit in memory). The core
 function is ``find_partition`` which finds the optimal partition using the
@@ -23,108 +22,21 @@ detection on bipartite graphs. See the `documentation
                 :target: http://leidenalg.readthedocs.io/en/latest/
                 :alt: Leiden documentation status
 
-.. image:: https://github.com/vtraag/leidenalg/actions/workflows/build.yml/badge.svg?branch=master
-                :target: https://github.com/vtraag/leidenalg/actions/workflows/build.yml
-                :alt: Leiden build status (GitHub Actions)
-
 .. image:: https://zenodo.org/badge/146722095.svg
                 :target: https://zenodo.org/badge/latestdoi/146722095
                 :alt: DOI
 
-.. image:: https://anaconda.org/conda-forge/leidenalg/badges/version.svg
-                :target: https://anaconda.org/conda-forge/leidenalg
-                :alt: Anaconda (conda-forge)
-
 Installation
 ------------
 
-In short: ``pip install leidenalg``. All major platforms are supported on
-Python>=3.6, earlier versions of Python are no longer supported. Alternatively,
-you can install from Anaconda (channel ``conda-forge``).
-
-For Unix like systems it is possible to install from source. For Windows this is
-overly complicated, and you are recommended to use the binary wheels. The igraph
-``C`` core library is provided within this package, and is automatically
-compiled. If you encounter any issue with compilation, please see
-http://igraph.org.
-
-Make sure you have all necessary tools for compilation. In Ubuntu this can be
-installed using ``sudo apt-get install build-essential autoconf automake flex
-bison``, please refer to the documentation for your specific system.  Make sure
-that not only ``gcc`` is installed, but also ``g++``, as the ``leidenalg``
-package is programmed in ``C++``.
-
-You can check if all went well by running a variety of tests using ``python
-setup.py test``.
-
-There are basically two installation modes, similar to the python-igraph package
-itself (from which most of the setup.py comes).
-
-1. No ``C`` core library is installed yet. The ``C`` core
-   library of igraph that is provided within the ``leidenalg`` package is
-   compiled.
-2. A ``C`` core library is already installed. In this case, you may link
-   dynamically to the already installed version by specifying
-   ``--no-pkg-config``. This is probably also the version that is used by the
-   igraph package, but you may want to double check this.
-
-In case the ``python-igraph`` package is already installed before, make sure that
-both use the **same versions** (at least the same minor version, which should be
-API compatible).
-
-Troubleshooting
----------------
-
-In case of any problems, best to start over with a clean environment. Make sure
-you remove the ``python-igraph`` package completely, remove the ``C`` core
-library and remove the ``leidenalg`` package. Then, do a complete reinstall
-starting from ``pip install leidenalg``. In case you want a dynamic library be
-sure to then install the ``C`` core library from source before. Make sure you
-**install the same versions**.
-
-Usage
------
-
-There is no standalone version of ``leidenalg``, and you will always need python
-to access it. There are no plans at the moment for developing a standalone
-version or R support. However, there have been various efforts to port the
-package to R. These typically do not offer all available functionality or have
-some other limitations, but nonetheless may be very useful. The available ports
-are:
-
-- https://github.com/cole-trapnell-lab/leidenbase
-- https://github.com/TomKellyGenetics/leiden
-- https://github.com/kharchenkolab/leidenAlg
-
-Please refer to the documentation for more details
-on function calls and parameters.
-
-This implementation is made for flexibility, but ``igraph`` nowadays also
-includes an implementation of the Leiden algorithm internally. That
-implementation is less flexible: the implementation only works on undirected
-graphs, and only CPM and modularity are supported. It is likely to be
-substantially faster though.
-
-Just to get you started, below the essential parts.
-To start, make sure to import the packages:
-
->>> import leidenalg
->>> import igraph as ig
-
-We'll create a random graph for testing purposes:
-
->>> G = ig.Graph.Erdos_Renyi(100, 0.1);
-
-For simply finding a partition use:
-
->>> part = leidenalg.find_partition(G, leidenalg.ModularityVertexPartition);
+TBD
 
 Contribute
 ----------
 
 Source code: https://github.com/vtraag/leidenalg
 
-Issue tracking: https://github.com/vtraag/leidenalg/issues
+Issue tracking: https://github.com/theAeon/libleidenalg/issues
 
 See the documentation on `Implementation` for more details on how to
 contribute new methods.
@@ -184,7 +96,7 @@ Please cite the references appropriately in case they are used.
 Licence
 -------
 
-Copyright (C) 2020 V.A. Traag
+Copyright (C) 2020 V.A. Traag, (C) 2022 Andrew Robbins
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
