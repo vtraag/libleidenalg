@@ -36,7 +36,7 @@ install(FILES
 
  install(TARGETS leidenalg
   EXPORT leidenalgTargets
-  LIBRARY DESTINATION "${CMAKE_INSTALL_LIB}" COMPONENT shlib
+  LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT shlib
   FILE_SET headers
     DESTINATION include/libleidenalg
     COMPONENT dev)
