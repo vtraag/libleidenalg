@@ -34,9 +34,9 @@ TBD
 Contribute
 ----------
 
-Source code: https://github.com/vtraag/leidenalg
+Source code: https://github.com/vtraag/libleidenalg
 
-Issue tracking: https://github.com/theAeon/libleidenalg/issues
+Issue tracking: https://github.com/vtraag/libleidenalg/issues
 
 See the documentation on `Implementation` for more details on how to
 contribute new methods.
