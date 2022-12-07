@@ -10,7 +10,7 @@ include(CMakePackageConfigHelpers)
 
 find_package(igraph CONFIG REQUIRED)
 
-add_subdirectory(src/leidenalg)
+add_subdirectory(src)
 add_subdirectory(include)
 
 
