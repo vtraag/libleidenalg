@@ -38,6 +38,6 @@ install(FILES
   EXPORT leidenalgTargets
   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT shlib
   FILE_SET headers
-    DESTINATION include/libleidenalg
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libleidenalg
     COMPONENT dev)
 install(EXPORT leidenalgTargets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/libleidenalg FILE leidenalgTargets.cmake)
