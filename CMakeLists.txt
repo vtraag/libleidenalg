@@ -8,7 +8,7 @@ project(leidenalg VERSION 0.9.0)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-find_package(igraph CONFIG REQUIRED)
+find_package(igraph 0.10 CONFIG REQUIRED)
 
 add_subdirectory(src)
 add_subdirectory(include)
