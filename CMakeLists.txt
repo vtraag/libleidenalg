@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.23)
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake"
   CACHE STRING "Vcpkg toolchain file")
 
-project(leidenalg VERSION 0.9.0)
+project(libleidenalg VERSION 0.9.0)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -12,31 +12,22 @@ find_package(igraph 0.10 CONFIG REQUIRED)
 
 add_subdirectory(src)
 
+configure_package_config_file(libleidenalgConfig.cmake.in "${PROJECT_BINARY_DIR}/libleidenalgConfig.cmake"
+INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/libleidenalg/cmake"
+PATH_VARS CMAKE_INSTALL_INCLUDEDIR)
+write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfigVersion.cmake" COMPATIBILITY SameMinorVersion)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfig.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfigVersion.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/libleidenalg/cmake"
+        COMPONENT dev)
 
-export(TARGETS leidenalg FILE "${PROJECT_BINARY_DIR}/libleidenalgTargets.cmake")
-export(PACKAGE leidenalg)
+export(TARGETS libleidenalg FILE "${PROJECT_BINARY_DIR}/libleidenalgTargets.cmake")
+export(PACKAGE libleidenalg)
 
-# ... for the build tree
-set(CONF_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
-configure_file(libleidenalgConfig.cmake.in
-  "${PROJECT_BINARY_DIR}/libleidenalgConfig.cmake" @ONLY)
-# ... for the install tree
-set(CONF_INCLUDE_DIRS "\${PROJECT_CMAKE_DIR}/${CMAKE_INSTALL_INCLUDEDIR}")
-configure_file(libleidenalgConfig.cmake.in
-  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/libleidenalgConfig.cmake" @ONLY)
-# ... for both
-write_basic_package_version_file("${PROJECT_BINARY_DIR}/libleidenalgConfigVersion.cmake" COMPATIBILITY SameMinorVersion)
-
-
-install(FILES
-  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/libleidenalgConfig.cmake"
-  "${PROJECT_BINARY_DIR}/libleidenalgConfigVersion.cmake"
-  DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/libleidenalg" COMPONENT dev)
-
- install(TARGETS leidenalg
-  EXPORT leidenalgTargets
+ install(TARGETS libleidenalg
+  EXPORT libleidenalgTargets
   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT shlib
   FILE_SET headers
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libleidenalg
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/libleidenalg"
     COMPONENT dev)
-install(EXPORT leidenalgTargets DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/libleidenalg FILE leidenalgTargets.cmake)
+install(EXPORT libleidenalgTargets DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/libleidenalg/cmake" FILE libleidenalgTargets.cmake)

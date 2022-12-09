@@ -1,4 +1,4 @@
-add_library(leidenalg SHARED CPMVertexPartition.cpp
+add_library(libleidenalg SHARED CPMVertexPartition.cpp
 GraphHelper.cpp
 LinearResolutionParameterVertexPartition.cpp
 ModularityVertexPartition.cpp
@@ -10,7 +10,7 @@ ResolutionParameterVertexPartition.cpp
 SignificanceVertexPartition.cpp
 SurpriseVertexPartition.cpp)
 
-target_sources(leidenalg
+target_sources(libleidenalg
   PUBLIC
   FILE_SET headers
   TYPE HEADERS
@@ -24,10 +24,10 @@ target_sources(leidenalg
         ResolutionParameterVertexPartition.h
         SignificanceVertexPartition.h
         SurpriseVertexPartition.h)
-set_target_properties(leidenalg PROPERTIES VERSION ${PROJECT_VERSION})
-set_target_properties(leidenalg PROPERTIES SOVERSION 1)
+set_target_properties(libleidenalg PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(libleidenalg PROPERTIES SOVERSION 1)
 if(WIN32 AND NOT CYGWIN)
-  set_target_properties(leidenalg PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+  set_target_properties(libleidenalg PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 endif()
 
-target_link_libraries (leidenalg PUBLIC igraph::igraph)
+target_link_libraries (libleidenalg PUBLIC igraph::igraph)
