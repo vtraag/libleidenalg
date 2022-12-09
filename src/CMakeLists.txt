@@ -10,6 +10,20 @@ ResolutionParameterVertexPartition.cpp
 SignificanceVertexPartition.cpp
 SurpriseVertexPartition.cpp)
 
+target_sources(leidenalg
+  PUBLIC
+  FILE_SET headers
+  TYPE HEADERS
+  FILES Optimiser.h 
+        GraphHelper.h 
+        CPMVertexPartition.h
+        ModularityVertexPartition.h
+        MutableVertexPartition.h
+        RBConfigurationVertexPartition.h
+        RBERVertexPartition.h
+        ResolutionParameterVertexPartition.h
+        SignificanceVertexPartition.h
+        SurpriseVertexPartition.h)
 set_target_properties(leidenalg PROPERTIES VERSION ${PROJECT_VERSION})
 set_target_properties(leidenalg PROPERTIES SOVERSION 1)
 if(WIN32 AND NOT CYGWIN)

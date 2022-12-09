@@ -11,7 +11,6 @@ include(CMakePackageConfigHelpers)
 find_package(igraph 0.10 CONFIG REQUIRED)
 
 add_subdirectory(src)
-add_subdirectory(include)
 
 
 export(TARGETS leidenalg FILE "${PROJECT_BINARY_DIR}/libleidenalgTargets.cmake")
