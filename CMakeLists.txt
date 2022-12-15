@@ -7,6 +7,10 @@ include(CMakePackageConfigHelpers)
 
 find_package(igraph 0.10 CONFIG REQUIRED)
 
+# Set default symbol visibility to hidden
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+
 add_subdirectory(src)
 
 configure_package_config_file(libleidenalgConfig.cmake.in "${PROJECT_BINARY_DIR}/libleidenalgConfig.cmake"
