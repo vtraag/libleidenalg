@@ -3,7 +3,7 @@
 
 #include <MutableVertexPartition.h>
 
-class ModularityVertexPartition : public MutableVertexPartition
+class LIBLEIDENALG_EXPORT ModularityVertexPartition : public MutableVertexPartition
 {
   public:
     ModularityVertexPartition(Graph* graph,

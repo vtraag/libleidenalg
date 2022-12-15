@@ -4,7 +4,7 @@
 #include <LinearResolutionParameterVertexPartition.h>
 
 
-class RBERVertexPartition : public LinearResolutionParameterVertexPartition
+class LIBLEIDENALG_EXPORT RBERVertexPartition : public LinearResolutionParameterVertexPartition
 {
   public:
     RBERVertexPartition(Graph* graph,

@@ -6,7 +6,7 @@
   using std::cerr;
   using std::endl;
 
-class SurpriseVertexPartition: public MutableVertexPartition
+class LIBLEIDENALG_EXPORT SurpriseVertexPartition: public MutableVertexPartition
 {
   public:
     SurpriseVertexPartition(Graph* graph, vector<size_t> const& membership);

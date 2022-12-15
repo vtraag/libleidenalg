@@ -42,7 +42,7 @@ Leiden method in the optimisation class can call these general functions in
 order to optimise the quality function.
 *****************************************************************************/
 
-class MutableVertexPartition
+class LIBLEIDENALG_EXPORT MutableVertexPartition
 {
   public:
     MutableVertexPartition(Graph* graph,
