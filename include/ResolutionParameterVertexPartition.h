@@ -3,7 +3,7 @@
 
 #include <MutableVertexPartition.h>
 
-class ResolutionParameterVertexPartition : public MutableVertexPartition
+class LIBLEIDENALG_EXPORT ResolutionParameterVertexPartition : public MutableVertexPartition
 {
   public:
     ResolutionParameterVertexPartition(Graph* graph,

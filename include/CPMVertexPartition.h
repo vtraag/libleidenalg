@@ -3,7 +3,7 @@
 
 #include <LinearResolutionParameterVertexPartition.h>
 
-class CPMVertexPartition : public LinearResolutionParameterVertexPartition
+class LIBLEIDENALG_EXPORT CPMVertexPartition : public LinearResolutionParameterVertexPartition
 {
   public:
     CPMVertexPartition(Graph* graph,

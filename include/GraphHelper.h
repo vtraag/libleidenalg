@@ -3,6 +3,8 @@
 
 #include <igraph.h>
 
+#include "libleidenalg_export.h"
+
 #include <vector>
 #include <set>
 #include <exception>
@@ -62,7 +64,7 @@ inline size_t get_random_int(size_t from, size_t to, igraph_rng_t* rng)
 
 void shuffle(vector<size_t>& v, igraph_rng_t* rng);
 
-class Graph
+class LIBLEIDENALG_EXPORT Graph
 {
   public:
     Graph(igraph_t* graph,

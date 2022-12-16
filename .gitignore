@@ -1,4 +1,9 @@
 MANIFEST
+out/
+.vs/
+vcpkg
+vcpkg/
+CMakeSettings.json
 build/
 dist/
 lib/
