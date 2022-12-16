@@ -1,14 +1,19 @@
-add_library(libleidenalg SHARED CPMVertexPartition.cpp
-GraphHelper.cpp
-LinearResolutionParameterVertexPartition.cpp
-ModularityVertexPartition.cpp
-MutableVertexPartition.cpp
-Optimiser.cpp
-RBConfigurationVertexPartition.cpp
-RBERVertexPartition.cpp
-ResolutionParameterVertexPartition.cpp
-SignificanceVertexPartition.cpp
-SurpriseVertexPartition.cpp)
+add_library(libleidenalg
+  GraphHelper.cpp
+  Optimiser.cpp
+  MutableVertexPartition.cpp
+
+  ModularityVertexPartition.cpp
+  SignificanceVertexPartition.cpp
+  SurpriseVertexPartition.cpp
+
+  ResolutionParameterVertexPartition.cpp  
+  LinearResolutionParameterVertexPartition.cpp
+  CPMVertexPartition.cpp
+  RBConfigurationVertexPartition.cpp
+  RBERVertexPartition.cpp
+
+)
 
 set_target_properties(libleidenalg PROPERTIES VERSION ${PROJECT_VERSION})
 set_target_properties(libleidenalg PROPERTIES SOVERSION 1)
@@ -38,5 +43,11 @@ target_include_directories(
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
 )
+
+if (NOT BUILD_SHARED_LIBS)
+  target_compile_definitions(libleidenalg PRIVATE LEIDENALG_STATIC)
+else()
+  target_compile_definitions(libleidenalg PRIVATE libleidenalg_EXPORTS)
+endif()
 
 target_link_libraries (libleidenalg PUBLIC igraph::igraph)

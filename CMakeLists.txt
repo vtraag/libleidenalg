@@ -11,6 +11,9 @@ find_package(igraph 0.10 CONFIG REQUIRED)
 set(CMAKE_C_VISIBILITY_PRESET hidden)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
+# Expose the BUILD_SHARED_LIBS option in the ccmake UI
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+
 add_subdirectory(src)
 add_subdirectory(include)
 
