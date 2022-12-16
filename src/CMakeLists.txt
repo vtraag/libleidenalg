@@ -10,20 +10,6 @@ ResolutionParameterVertexPartition.cpp
 SignificanceVertexPartition.cpp
 SurpriseVertexPartition.cpp)
 
-target_sources(libleidenalg
-  PUBLIC
-  FILE_SET headers
-  TYPE HEADERS
-  FILES Optimiser.h 
-        GraphHelper.h 
-        CPMVertexPartition.h
-        ModularityVertexPartition.h
-        MutableVertexPartition.h
-        RBConfigurationVertexPartition.h
-        RBERVertexPartition.h
-        ResolutionParameterVertexPartition.h
-        SignificanceVertexPartition.h
-        SurpriseVertexPartition.h)
 set_target_properties(libleidenalg PROPERTIES VERSION ${PROJECT_VERSION})
 set_target_properties(libleidenalg PROPERTIES SOVERSION 1)
 
@@ -38,7 +24,29 @@ generate_export_header(libleidenalg
 target_include_directories(
   libleidenalg
   PUBLIC
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
 )
+
+target_sources(libleidenalg
+  PUBLIC
+  FILE_SET headers
+  TYPE HEADERS
+  BASE_DIRS 
+    ${PROJECT_SOURCE_DIR}/include/
+    ${PROJECT_BINARY_DIR}/include/
+  FILES 
+    ${PROJECT_SOURCE_DIR}/include/Optimiser.h 
+    ${PROJECT_SOURCE_DIR}/include/GraphHelper.h 
+    ${PROJECT_SOURCE_DIR}/include/CPMVertexPartition.h
+    ${PROJECT_SOURCE_DIR}/include/ModularityVertexPartition.h
+    ${PROJECT_SOURCE_DIR}/include/MutableVertexPartition.h
+    ${PROJECT_SOURCE_DIR}/include/RBConfigurationVertexPartition.h
+    ${PROJECT_SOURCE_DIR}/include/RBERVertexPartition.h
+    ${PROJECT_SOURCE_DIR}/include/ResolutionParameterVertexPartition.h
+    ${PROJECT_SOURCE_DIR}/include/SignificanceVertexPartition.h
+    ${PROJECT_SOURCE_DIR}/include/SurpriseVertexPartition.h
+    ${PROJECT_BINARY_DIR}/include/libleidenalg_export.h
+  )
 
 target_link_libraries (libleidenalg PUBLIC igraph::igraph)
