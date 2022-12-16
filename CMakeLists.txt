@@ -12,6 +12,7 @@ set(CMAKE_C_VISIBILITY_PRESET hidden)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 add_subdirectory(src)
+add_subdirectory(include)
 
 configure_package_config_file(libleidenalgConfig.cmake.in "${PROJECT_BINARY_DIR}/libleidenalgConfig.cmake"
 INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/libleidenalg/cmake"
