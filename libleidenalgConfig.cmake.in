@@ -8,7 +8,7 @@ set(LIBLEIDENALG_VERSION 0.9.0)
 @PACKAGE_INIT@
 
 # Compute paths
-set_and_check(LIBLEIDENALG_INCLUDEDIR "@PACKAGE_LIBLEIDENALG_INCLUDE_DIR")
+set_and_check(LIBLEIDENALG_INCLUDEDIR "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR")
 
 # Our library dependencies (contains definitions for IMPORTED targets)
 if(NOT TARGET libleidenalg AND NOT LIBLEIDENALG_BINARY_DIR)
