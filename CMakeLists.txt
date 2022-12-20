@@ -19,7 +19,7 @@ add_subdirectory(include)
 
 configure_package_config_file(libleidenalgConfig.cmake.in "${PROJECT_BINARY_DIR}/libleidenalgConfig.cmake"
 INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/libleidenalg/cmake"
-PATH_VARS CMAKE_INSTALL_INCLUDEDIR)
+PATH_VARS CMAKE_INSTALL_INCLUDEDIR CMAKE_INSTALL_LIBDIR)
 write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfigVersion.cmake" COMPATIBILITY SameMinorVersion)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfigVersion.cmake"

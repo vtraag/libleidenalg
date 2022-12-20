@@ -1,21 +1,22 @@
 # - Config file for the libleidenalg package
 # It defines the following variables
-#  LIBLEIDENALG_INCLUDE_DIRS - include directories for libleidenalg
+#  LIBLEIDENALG_INCLUDEDIR - include directories for libleidenalg
 #  LIBLEIDENALG_LIBRARIES    - libraries to link against
 
 set(LIBLEIDENALG_VERSION 0.9.0)
+  if (CMAKE_BUILD_TYPE EQUAL "RELEASE")
+      @PACKAGE_INIT@
 
-@PACKAGE_INIT@
+  # Compute paths
+  set_and_check(LIBLEIDENALG_INCLUDEDIR "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@")
 
-# Compute paths
-set_and_check(LIBLEIDENALG_INCLUDEDIR "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@")
+  # Our library dependencies (contains definitions for IMPORTED targets)
+  if(NOT TARGET libleidenalg AND NOT LIBLEIDENALG_BINARY_DIR)
+    include("${LIBLEIDENALG_CMAKE_DIR}/libleidenalgTargets.cmake")
+  endif()
 
-# Our library dependencies (contains definitions for IMPORTED targets)
-if(NOT TARGET libleidenalg AND NOT LIBLEIDENALG_BINARY_DIR)
-  include("${LIBLEIDENALG_CMAKE_DIR}/libleidenalgTargets.cmake")
-endif()
+  # These are IMPORTED targets created by libleidenalgTargets.cmake
+  set_and_check(LIBLEIDENALG_LIBRARIES "@PACKAGE_CMAKE_INSTALL_LIBDIR@")
 
-# These are IMPORTED targets created by libleidenalgTargets.cmake
-set_and_check(LEIDENALG_LIBRARIES libleidenalg)
-
-check_required_components(libleidenalg)
+  check_required_components(libleidenalg)
+endif (CMAKE_BUILD_TYPE EQUAL "RELEASE")
