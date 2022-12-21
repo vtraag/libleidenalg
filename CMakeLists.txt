@@ -9,6 +9,7 @@ project(libleidenalg VERSION ${PACKAGE_VERSION_BASE})
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+include(packaging)
 
 find_package(igraph 0.10 CONFIG REQUIRED)
 
