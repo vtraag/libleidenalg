@@ -1,4 +1,4 @@
-#include "RBERVertexPartition.h"
+#include <RBERVertexPartition.h>
 
 RBERVertexPartition::RBERVertexPartition(Graph* graph,
       vector<size_t> const& membership, double resolution_parameter) :

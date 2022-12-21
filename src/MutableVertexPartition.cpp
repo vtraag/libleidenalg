@@ -1,4 +1,4 @@
-#include "MutableVertexPartition.h"
+#include <MutableVertexPartition.h>
 
 #ifdef DEBUG
   using std::cerr;
