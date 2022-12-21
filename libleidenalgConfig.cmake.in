@@ -3,7 +3,7 @@
 #  LIBLEIDENALG_INCLUDEDIR - include directories for libleidenalg
 #  LIBLEIDENALG_LIBRARIES    - libraries to link against
 
-set(LIBLEIDENALG_VERSION 0.9.0)
+set(LIBLEIDENALG_VERSION "@PACKAGE_VERSION_BASE@")
   if (CMAKE_BUILD_TYPE EQUAL "RELEASE")
       @PACKAGE_INIT@
 
