@@ -7,12 +7,16 @@ target_sources(libleidenalg
   FILES 
     Optimiser.h 
     GraphHelper.h 
-    CPMVertexPartition.h
-    ModularityVertexPartition.h
     MutableVertexPartition.h
-    RBConfigurationVertexPartition.h
-    RBERVertexPartition.h
-    ResolutionParameterVertexPartition.h
+    
+    ModularityVertexPartition.h
     SignificanceVertexPartition.h
     SurpriseVertexPartition.h
+
+    ResolutionParameterVertexPartition.h
+    LinearResolutionParameterVertexPartition.h    
+    CPMVertexPartition.h
+    RBConfigurationVertexPartition.h
+    RBERVertexPartition.h
+
   )
