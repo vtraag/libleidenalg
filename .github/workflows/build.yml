@@ -55,6 +55,10 @@ jobs:
       - name: Prints output of run-vcpkg's action
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}'"
 
+      - name: Install gfortran
+        runs-on: macos-latest
+        run: brew install gfortran
+
       - name: Run CMake with Ninja
         uses: lukka/run-cmake@v10
         with:
