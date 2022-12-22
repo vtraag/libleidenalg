@@ -1,0 +1,62 @@
+# Copyright (c) 2020-2021-2022 Luca Cappa
+# Released under the term specified in file LICENSE.txt
+# SPDX short identifier: MIT
+#
+# The peculiarity of this workflow is that assumes vcpkg is NOT stored as a submodule of this repository.
+# This workflow does the following:
+# - Restores vcpkg artifacts from cache.
+# - Using the provided Git commit id, sets up vcpkg if needed, then run CMake with CMakePreset.json using a configuration
+#   that leverages the vcpkg's toolchain file. This will automatically run vcpkg to install dependencies
+#   described by the vcpkg.json manifest file. It will be a no-op if those are restored from cache.
+# - Finally builds the sources with Ninja.
+name: hosted-ninja-vcpkg-autocache
+on: [push, workflow_dispatch]
+
+jobs:
+  job:
+    name: ${{ matrix.os }}-${{ github.workflow }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: windows-latest
+            vcpkgCommitId: '253704407ae68efa37bf8f5b59b3e06dd40d3d3f'
+          - os: ubuntu-latest
+            vcpkgCommitId: '253704407ae68efa37bf8f5b59b3e06dd40d3d3f'
+          - os: macos-latest
+            vcpkgCommitId: '253704407ae68efa37bf8f5b59b3e06dd40d3d3f'
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - uses: lukka/get-cmake@latest
+      - name: Dump the content of $RUNNER_TEMP
+        run: find $RUNNER_TEMP
+        shell: bash
+      - name: Dump the content of $RUNNER_WORKSPACE
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
+      - name: Restore artifacts, or setup vcpkg (do not install any package)
+        uses: lukka/run-vcpkg@v10
+        id: runvcpkg
+        with:
+          # This specifies the location of vcpkg, where it is going to be restored from cache, or create from scratch.
+          vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
+          # The Git commit id of vcpkg to be checked out. This is only needed because we are not using a submodule.
+          vcpkgGitCommitId: '${{ matrix.vcpkgCommitId}}'
+          # The vcpkg.json file, which will be part of cache key computation.
+          vcpkgJsonGlob: '**/vcpkg.json'
+
+      - name: Prints output of run-vcpkg's action
+        run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}'"
+
+      - name: Configure CMake
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DFORCE_COLORED_OUTPUT=1
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}        
