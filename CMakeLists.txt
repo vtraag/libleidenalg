@@ -1,9 +1,15 @@
 cmake_minimum_required (VERSION 3.23)
 
-project(libleidenalg VERSION 0.9.0)
+# Add etc/cmake to CMake's search path so we can put our private stuff there
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/etc/cmake)
+
+include(version)
+
+project(libleidenalg VERSION ${PACKAGE_VERSION_BASE})
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+include(packaging)
 
 find_package(igraph 0.10 CONFIG REQUIRED)
 
@@ -19,7 +25,7 @@ add_subdirectory(include)
 
 configure_package_config_file(libleidenalgConfig.cmake.in "${PROJECT_BINARY_DIR}/libleidenalgConfig.cmake"
 INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/libleidenalg/cmake"
-PATH_VARS CMAKE_INSTALL_INCLUDEDIR)
+PATH_VARS CMAKE_INSTALL_INCLUDEDIR CMAKE_INSTALL_LIBDIR)
 write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfigVersion.cmake" COMPATIBILITY SameMinorVersion)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfigVersion.cmake"
