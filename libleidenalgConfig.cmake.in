@@ -19,4 +19,4 @@ set(LIBLEIDENALG_VERSION "@PACKAGE_VERSION_BASE@")
   set_and_check(LIBLEIDENALG_LIBRARIES "@PACKAGE_CMAKE_INSTALL_LIBDIR@")
 
   check_required_components(libleidenalg)
-endif (CMAKE_BUILD_TYPE EQUAL "RELEASE")
+endif()
