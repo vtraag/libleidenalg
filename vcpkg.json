@@ -6,7 +6,10 @@
   "homepage": "https://github.com/vtraag/leidenalg",
   "license": "GPL-3.0-or-later",
   "dependencies": [
-    "igraph",
+    {
+      "name": "igraph",
+      "version>=": "0.10"
+    },
     {
       "name": "vcpkg-cmake",
       "host": true
