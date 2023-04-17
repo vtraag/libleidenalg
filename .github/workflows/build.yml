@@ -58,7 +58,11 @@ jobs:
 
       - name: Install gfortran
         if: runner.os == 'macOS'
-        run: brew install gfortran
+        run: |
+          brew install gfortran
+          ln -s /usr/local/bin/gfortran-12 /usr/local/bin/gfortran
+          ln -s /usr/local/bin/gcc-12 /usr/local/bin/gcc
+          which gfortran
 
       - name: Run CMake with Ninja
         uses: lukka/run-cmake@v10
