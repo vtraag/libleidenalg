@@ -33,6 +33,12 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
+          path: repo
+
+      - name: Create git archive to build
+        run: |
+          cd repo
+          git archive --format=tar --prefix= HEAD | (cd .. && tar xf -)
 
       - uses: lukka/get-cmake@latest
       - name: Dump the content of $RUNNER_TEMP
