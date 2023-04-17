@@ -38,7 +38,9 @@ jobs:
       - name: Create git archive to build
         run: |
           cd repo
-          git archive --format=tar --prefix= HEAD | (cd .. && tar xf -)
+          git archive --format=tar --prefix= HEAD -o archive.tar
+          cd ..
+          tar xf repo/archive.tar
 
       - uses: lukka/get-cmake@latest
       - name: Dump the content of $RUNNER_TEMP
