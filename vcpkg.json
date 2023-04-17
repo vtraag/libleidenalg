@@ -5,6 +5,7 @@
   "description": "Leiden is a general algorithm for methods of community detection in large networks.",
   "homepage": "https://github.com/vtraag/leidenalg",
   "license": "GPL-3.0-or-later",
+  "builtin-baseline": "305fa73756232ec8727196a70fd3dcc7870da77e",
   "dependencies": [
     {
       "name": "igraph",
