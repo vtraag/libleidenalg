@@ -6,6 +6,7 @@ include(GetGitRevisionDescription)
 # CMAKE_CURRENT_SOURCE_DIR to get the directory containing the CMakeLists.txt
 # file that version.cmake was included from, which is the top-level
 # CMakeLists.txt file of libleidenalg itself
+
 set(VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/VERSION")
 set(NEXT_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/NEXT_VERSION")
 
@@ -36,24 +37,10 @@ else()
     string(APPEND PACKAGE_VERSION "-dev")
     message(STATUS "Version number: ${PACKAGE_VERSION}")
   else()
-    message(STATUS "Cannot find out the version number of this package; VERSION is missing.")
-    message(STATUS "")
-    message(STATUS "The official releases should contain this file, therefore you are")
-    message(STATUS "most likely trying to compile a development version yourself. The development")
-    message(STATUS "versions need Git to be able to determine the version number of libleidenalg.")
-    message(STATUS "")
-    if(Git_FOUND)
-      message(STATUS "It seems like you do have Git but it failed to determine the package version number.")
-      message(STATUS "")
-      message(STATUS "Git was found at: ${GIT_EXECUTABLE}")
-      message(STATUS "The version number detection failed with: ${PACKAGE_VERSION}")
-      message(STATUS "")
-      message(STATUS "Most frequently this is caused by a shallow Git checkout that contains no tags in the history.")
-    else()
-      message(STATUS "Please install Git, make sure it is in your path, and then try again.")
-    endif()
-    message(STATUS "")
-    message(FATAL_ERROR "Configuration failed.")
+    # Read version from vcpkg.json
+    file(READ ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json VCPKG_JSON)
+    string(JSON PACKAGE_VERSION GET ${VCPKG_JSON} "version")
+    message(STATUS "Version number from vcpkg.json: ${PACKAGE_VERSION}")
   endif()
 endif()
 
@@ -74,17 +61,3 @@ else()
   set(PACKAGE_VERSION_PRERELEASE "cmake-experimental")
 endif()
 
-# Add a target that we can use to generate an VERSION file in the build
-# folder, for the sake of creating a tarball. This is needed only if libleidenalg is
-# the main project
-if(NOT PROJECT_NAME)
-  add_custom_target(
-    versionfile
-    BYPRODUCTS "${CMAKE_BINARY_DIR}/VERSION"
-    COMMAND "${CMAKE_COMMAND}"
-      -DVERSION="${PACKAGE_VERSION}"
-      -DVERSION_FILE_PATH="${CMAKE_BINARY_DIR}/VERSION"
-      -P "${CMAKE_SOURCE_DIR}/etc/cmake/create_version_file.cmake"
-    COMMENT "Generating VERSION file in build folder"
-  )
-endif()
