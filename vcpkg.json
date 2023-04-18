@@ -9,7 +9,7 @@
   "dependencies": [
     {
       "name": "igraph",
-      "version>=": "0.10.1"
+      "version>=": "0.10.4"
     },
     {
       "name": "vcpkg-cmake",
