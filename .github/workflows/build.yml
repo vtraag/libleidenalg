@@ -51,7 +51,7 @@ jobs:
         shell: bash
 
       - name: Restore artifacts, or setup vcpkg (do not install any package)
-        uses: lukka/run-vcpkg@v10
+        uses: lukka/run-vcpkg@v11
         id: runvcpkg
         with:
           # This specifies the location of vcpkg, where it is going to be restored from cache, or create from scratch.
