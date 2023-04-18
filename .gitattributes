@@ -1,2 +1,5 @@
 * text=auto
 vcpkg.json export-subst
+.gitignore export-ignore
+.gitattributes export-ignore
+.github/ export-ignore
