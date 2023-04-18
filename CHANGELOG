@@ -1,3 +1,6 @@
+0.10.0
+- Separated C++ core into this external library, Python interface remains available at https://github.com/vtraag/leidenalg.
+
 0.9.0
 - Update C core to 0.10.1
 
