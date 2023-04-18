@@ -1,97 +1,139 @@
-libleidenalg
-==============
+# Introduction
 
-This package implements the Leiden algorithm in ``C++``.  It relies on ``igraph`` for it to function. Besides the
-relative flexibility of the implementation, it also scales well, and can be run
-on graphs of millions of nodes (as long as they can fit in memory). The core
-function is ``find_partition`` which finds the optimal partition using the
-Leiden algorithm [1]_, which is an extension of the Louvain algorithm [2]_ for a
-number of different methods. The methods currently implemented are (1)
-modularity [3]_, (2) Reichardt and Bornholdt's model using the configuration
-null model and the Erdös-Rényi null model [4]_, (3) the Constant Potts model
-(CPM) [5]_, (4) Significance [6]_, and finally (5) Surprise [7]_. In addition,
-it supports multiplex partition optimisation allowing community detection on for
-example negative links [8]_ or multiple time slices [9]_. There is the
-possibility of only partially optimising a partition, so that some community
-assignments remain fixed [10]_. It also provides some support for community
-detection on bipartite graphs. See the `documentation
-<http://leidenalg.readthedocs.io/en/latest/>`_ for more information.
+This package implements the Leiden algorithm in `C++`.  It relies on
+`igraph` for it to function. Besides the relative flexibility of the
+implementation, it also scales well, and can be run on graphs of millions of
+nodes (as long as they can fit in memory). The core class is
+`Optimiser` which finds the optimal partition using the Leiden algorithm[^1], which is an extension of the Louvain algorithm[^2] for a number of
+different methods. The methods currently implemented are (1) modularity[^3],
+(2) Reichardt and Bornholdt's model using the configuration null model and the
+Erdös-Rényi null model[^4], (3) the Constant Potts model (CPM) [^5], (4)
+Significance [^6], and finally (5) Surprise [^7]. In addition, it supports
+multiplex partition optimisation allowing community detection on for example
+negative links [^8] or multiple time slices [^9]. There is the possibility of
+only partially optimising a partition, so that some community assignments remain
+fixed [^10]. It also provides some support for community detection on bipartite
+graphs.
 
+This package contains the `C++` code only. Most people will find it easier to work with the Python interface at https://github.com/vtraag/leidenalg.
 
-.. image:: https://readthedocs.org/projects/leidenalg/badge
-                :target: http://leidenalg.readthedocs.io/en/latest/
-                :alt: Leiden documentation status
+# Installation
 
-.. image:: https://zenodo.org/badge/146722095.svg
-                :target: https://zenodo.org/badge/latestdoi/146722095
-                :alt: DOI
+The build system uses CMake and follows the prototypical CMake build steps:
 
-Installation
-------------
+1. Get the source code.
 
-TBD
+   You can download the source code from the latest release at https://github.com/vtraag/libleidenalg/releases. Alternatively, you can clone the repository using `git`.
 
-Contribute
-----------
+2. Create a build directory
+
+   You can create a build directory anywhere. A common location is to create a subdirectory in the source code as
+
+   ```
+   mkdir build
+   ```
+
+3. Configure the build system
+
+   Assuming you created the build directory as a subdirectory, you can run the following
+
+   ```
+   cmake ..
+   ```
+
+   Note that the build directory should be your current working directory.
+
+4. Build the library
+
+   ```
+   cmake --build .
+   ```
+
+5. Install the library
+
+   ```
+   cmake --build . --target install
+   ```
+
+Note that this library depends on `igraph`, which you should install before. See https://igraph.org/c/doc/igraph-Installation.html for more details.
+
+If you have installed `igraph` in a non-standard location, CMake might not be able to find it automatically. You can then pass the `${INSTALL_LOCATION}/lib/cmake/igraph/` location to CMake using `-Digraph_ROOT=${INSTALL_LOCATION}/lib/cmake/igraph/`.
+
+Note that you can change the installation location of `libleidenalg` using [`CMAKE_INSTALL_PREFIX`](https://cmake.org/cmake/help/latest/variable/CMAKE_INSTALL_PREFIX.html) as usual.
+
+You can change whether a static or dynamic library should be built using [`BUILD_SHARED_LIBS`](https://cmake.org/cmake/help/latest/variable/BUILD_SHARED_LIBS.html) as usual.
+
+# Contribute
 
 Source code: https://github.com/vtraag/libleidenalg
 
 Issue tracking: https://github.com/vtraag/libleidenalg/issues
 
-See the documentation on `Implementation` for more details on how to
-contribute new methods.
+## Implement new community detection methods
 
-References
-----------
+All methods derive from :class:`MutableVertexPartition`, which implements almost
+all necessary details, such as moving actual nodes while maintaining the
+internal administration. Similarly, it provides all the necessary functionality
+for initialising a partition. Additionally, there are two abstract classes that
+derive from this base `ResolutionParameterVertexPartition` and
+`LinearResolutionParameterVertexPartition` (which in turn derives from the
+former class). If you want a method with a resolution parameter, you should
+derive from one of these two classes, otherwise, simply from the base class
+`MutableVertexPartition`.
+
+There are two functions that you need to implement yourself: `diff_move` and
+`quality`. Note that they should always be consistent, so that we can double
+check the internal consistency. You should also ensure that the `diff_move`
+function can be correctly used on any aggregate graph (i.e. moving a node in the
+aggregate graph indeed corresponds to moving a set of nodes in the individual
+graph).
+
+
+# References
 
 Please cite the references appropriately in case they are used.
 
-.. [1] Traag, V.A., Waltman. L., Van Eck, N.-J. (2018). From Louvain to
+[^1]:  Traag, V.A., Waltman. L., Van Eck, N.-J. (2018). From Louvain to
        Leiden: guaranteeing well-connected communities. Scientific reports, 9(1), 5233.
-       `10.1038/s41598-019-41695-z <http://dx.doi.org/10.1038/s41598-019-41695-z>`_
+       [10.1038/s41598-019-41695-z](http://dx.doi.org/10.1038/s41598-019-41695-z)
 
-.. [2] Blondel, V. D., Guillaume, J.-L., Lambiotte, R., & Lefebvre, E. (2008).
+[^2]   Blondel, V. D., Guillaume, J.-L., Lambiotte, R., & Lefebvre, E. (2008).
        Fast unfolding of communities in large networks. Journal of Statistical
        Mechanics: Theory and Experiment, 10008(10), 6.
-       `10.1088/1742-5468/2008/10/P10008 <http://doi.org/10.1088/1742-5468/2008/10/P10008>`_
+       [10.1088/1742-5468/2008/10/P10008](http://doi.org/10.1088/1742-5468/2008/10/P10008)
 
-.. [3] Newman, M. E. J., & Girvan, M. (2004). Finding and evaluating community
+[^3]   Newman, M. E. J., & Girvan, M. (2004). Finding and evaluating community
        structure in networks. Physical Review E, 69(2), 026113.
-       `10.1103/PhysRevE.69.026113 <http://doi.org/10.1103/PhysRevE.69.026113>`_
+       [10.1103/PhysRevE.69.026113](http://doi.org/10.1103/PhysRevE.69.026113)
 
-.. [4] Reichardt, J., & Bornholdt, S. (2006). Statistical mechanics of
+[^4]   Reichardt, J., & Bornholdt, S. (2006). Statistical mechanics of
        community detection. Physical Review E, 74(1), 016110.
-       `10.1103/PhysRevE.74.016110 <http://doi.org/10.1103/PhysRevE.74.016110>`_
+       [10.1103/PhysRevE.74.016110](http://doi.org/10.1103/PhysRevE.74.016110)
 
-.. [5] Traag, V. A., Van Dooren, P., & Nesterov, Y. (2011). Narrow scope for
+[^5]   Traag, V. A., Van Dooren, P., & Nesterov, Y. (2011). Narrow scope for
        resolution-limit-free community detection. Physical Review E, 84(1),
-       016114.  `10.1103/PhysRevE.84.016114
-       <http://doi.org/10.1103/PhysRevE.84.016114>`_
+       1. [10.1103/PhysRevE.84.016114](http://doi.org/10.1103/PhysRevE.84.16114)
 
-.. [6] Traag, V. A., Krings, G., & Van Dooren, P. (2013). Significant scales in
-       community structure. Scientific Reports, 3, 2930.  `10.1038/srep02930
-       <http://doi.org/10.1038/srep02930>`_
+[^6]   Traag, V. A., Krings, G., & Van Dooren, P. (2013). Significant scales in
+       community structure. Scientific Reports, 3, 2930. [10.1038/srep02930](http://doi.org/10.1038/srep02930)
 
-.. [7] Traag, V. A., Aldecoa, R., & Delvenne, J.-C. (2015). Detecting
+[^7]   Traag, V. A., Aldecoa, R., & Delvenne, J.-C. (2015). Detecting
        communities using asymptotical surprise. Physical Review E, 92(2),
-       022816.  `10.1103/PhysRevE.92.022816
-       <http://doi.org/10.1103/PhysRevE.92.022816>`_
+       1. [10.1103/PhysRevE.92.022816](http://doi.org/10.1103/PhysRevE.92.022816)
 
-.. [8] Traag, V. A., & Bruggeman, J. (2009). Community detection in networks
+[^8]   Traag, V. A., & Bruggeman, J. (2009). Community detection in networks
        with positive and negative links. Physical Review E, 80(3), 036115.
-       `10.1103/PhysRevE.80.036115
-       <http://doi.org/10.1103/PhysRevE.80.036115>`_
+       [10.1103/PhysRevE.80.036115](http://doi.org/10.1103/PhysRevE.80.036115)
 
-.. [9] Mucha, P. J., Richardson, T., Macon, K., Porter, M. A., & Onnela, J.-P.
+[^9]   Mucha, P. J., Richardson, T., Macon, K., Porter, M. A., & Onnela, J.-P.
        (2010). Community structure in time-dependent, multiscale, and multiplex
-       networks. Science, 328(5980), 876–8. `10.1126/science.1184819
-       <http://doi.org/10.1126/science.1184819>`_
+       networks. Science, 328(5980), 876–8. [10.1126/science.1184819](http://doi.org/10.1126/science.1184819)
 
-.. [10] Zanini, F., Berghuis, B. A., Jones, R. C., Robilant, B. N. di,
+[^10]   Zanini, F., Berghuis, B. A., Jones, R. C., Robilant, B. N. di,
         Nong, R. Y., Norton, J., Clarke, Michael F., Quake, S. R. (2019).
         northstar: leveraging cell atlases to identify healthy and neoplastic
         cells in transcriptomes from human tumors. BioRxiv, 820928.
-        `10.1101/820928 <https://doi.org/10.1101/820928>`_
+        [10.1101/820928](https://doi.org/10.1101/820928)
 
 Licence
 -------
