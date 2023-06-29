@@ -13,6 +13,10 @@ include(packaging)
 
 find_package(igraph 0.10 CONFIG REQUIRED)
 
+# Set C++ standard version
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
 # Set default symbol visibility to hidden
 set(CMAKE_C_VISIBILITY_PRESET hidden)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
