@@ -108,7 +108,7 @@ class LIBLEIDENALG_EXPORT Graph
       return get_random_int(0, this->vcount() - 1, rng);
     };
 
-    inline igraph_t* get_igraph() { return this->_graph; };
+    inline const igraph_t* get_igraph() { return this->_graph; };
 
     inline size_t vcount() { return igraph_vcount(this->_graph); };
     inline size_t ecount() { return igraph_ecount(this->_graph); };
@@ -175,7 +175,7 @@ class LIBLEIDENALG_EXPORT Graph
 
     int _remove_graph;
 
-    igraph_t* _graph;
+    const igraph_t* _graph;
     igraph_vector_int_t _temp_igraph_vector;
 
     // Utility variables to easily access the strength of each node

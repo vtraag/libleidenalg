@@ -263,7 +263,7 @@ Graph::~Graph()
 {
   if (this->_remove_graph)
   {
-    igraph_destroy(this->_graph);
+    igraph_destroy((igraph_t*)this->_graph);
     delete this->_graph;
   }
   igraph_vector_int_destroy(&this->_temp_igraph_vector);
