@@ -63,32 +63,6 @@ Note that you can change the installation location of `libleidenalg` using [`CMA
 
 You can change whether a static or dynamic library should be built using [`BUILD_SHARED_LIBS`](https://cmake.org/cmake/help/latest/variable/BUILD_SHARED_LIBS.html) as usual.
 
-# Contribute
-
-Source code: https://github.com/vtraag/libleidenalg
-
-Issue tracking: https://github.com/vtraag/libleidenalg/issues
-
-## Implement new community detection methods
-
-All methods derive from :class:`MutableVertexPartition`, which implements almost
-all necessary details, such as moving actual nodes while maintaining the
-internal administration. Similarly, it provides all the necessary functionality
-for initialising a partition. Additionally, there are two abstract classes that
-derive from this base `ResolutionParameterVertexPartition` and
-`LinearResolutionParameterVertexPartition` (which in turn derives from the
-former class). If you want a method with a resolution parameter, you should
-derive from one of these two classes, otherwise, simply from the base class
-`MutableVertexPartition`.
-
-There are two functions that you need to implement yourself: `diff_move` and
-`quality`. Note that they should always be consistent, so that we can double
-check the internal consistency. You should also ensure that the `diff_move`
-function can be correctly used on any aggregate graph (i.e. moving a node in the
-aggregate graph indeed corresponds to moving a set of nodes in the individual
-graph).
-
-
 # References
 
 Please cite the references appropriately in case they are used.
