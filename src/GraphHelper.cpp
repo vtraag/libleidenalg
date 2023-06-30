@@ -259,23 +259,11 @@ Graph::Graph(igraph_t* graph)
   this->set_self_weights();
 }
 
-Graph::Graph()
-{
-  this->_graph = new igraph_t();
-  this->_remove_graph = true;
-  this->set_defaults();
-  this->_is_weighted = false;
-  this->_correct_self_loops = false;
-  igraph_vector_int_init(&this->_temp_igraph_vector, this->vcount());
-  this->init_admin();
-  this->set_self_weights();
-}
-
 Graph::~Graph()
 {
   if (this->_remove_graph)
   {
-    igraph_destroy(this->_graph);
+    igraph_destroy((igraph_t*)this->_graph);
     delete this->_graph;
   }
   igraph_vector_int_destroy(&this->_temp_igraph_vector);
