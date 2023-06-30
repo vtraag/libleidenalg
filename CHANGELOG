@@ -1,3 +1,8 @@
+0.11.0
+- Corrected include paths
+- Removed empty Graph::Graph constructor (PR #6)
+- Explicitly set C++ version (PR #4)
+
 0.10.0
 - Separated C++ core into this external library, Python interface remains available at https://github.com/vtraag/leidenalg.
 
