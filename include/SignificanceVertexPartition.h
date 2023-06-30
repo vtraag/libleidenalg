@@ -1,7 +1,7 @@
 #ifndef SIGNIFICANCEVERTEXPARTITION_H
 #define SIGNIFICANCEVERTEXPARTITION_H
 
-#include <MutableVertexPartition.h>
+#include "MutableVertexPartition.h"
 
 
 class LIBLEIDENALG_EXPORT SignificanceVertexPartition : public MutableVertexPartition

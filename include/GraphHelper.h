@@ -1,9 +1,9 @@
 #ifndef GRAPHHELPER_INCLUDED
 #define GRAPHHELPER_INCLUDED
 
-#include <igraph.h>
+#include <igraph/igraph.h>
 
-#include <libleidenalg_export.h>
+#include "libleidenalg_export.h"
 
 #include <vector>
 #include <set>
@@ -218,7 +218,7 @@ class LIBLEIDENALG_EXPORT Graph
 
 // We need this ugly way to include the MutableVertexPartition
 // to overcome a circular linkage problem.
-#include <MutableVertexPartition.h>
+#include "MutableVertexPartition.h"
 
 #endif // GRAPHHELPER_INCLUDED
 

@@ -1,7 +1,7 @@
 #ifndef RBERVERTEXPARTITION_H
 #define RBERVERTEXPARTITION_H
 
-#include <LinearResolutionParameterVertexPartition.h>
+#include "LinearResolutionParameterVertexPartition.h"
 
 
 class LIBLEIDENALG_EXPORT RBERVertexPartition : public LinearResolutionParameterVertexPartition

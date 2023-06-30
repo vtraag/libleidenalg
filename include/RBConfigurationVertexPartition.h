@@ -1,7 +1,7 @@
 #ifndef RBCONFIGURATIONVERTEXPARTITION_H
 #define RBCONFIGURATIONVERTEXPARTITION_H
 
-#include <LinearResolutionParameterVertexPartition.h>
+#include "LinearResolutionParameterVertexPartition.h"
 
 class LIBLEIDENALG_EXPORT RBConfigurationVertexPartition : public LinearResolutionParameterVertexPartition
 {

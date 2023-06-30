@@ -1,4 +1,4 @@
-#include <SurpriseVertexPartition.h>
+#include "SurpriseVertexPartition.h"
 
 SurpriseVertexPartition::SurpriseVertexPartition(Graph* graph,
       vector<size_t> const& membership) :

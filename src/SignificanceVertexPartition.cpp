@@ -1,4 +1,4 @@
-#include <SignificanceVertexPartition.h>
+#include "SignificanceVertexPartition.h"
 
 #ifdef DEBUG
 #include <iostream>

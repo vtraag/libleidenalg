@@ -2,7 +2,7 @@
 #define MUTABLEVERTEXPARTITION_H
 
 #include <string>
-#include <GraphHelper.h>
+#include "GraphHelper.h"
 #include <map>
 #include <queue>
 #include <utility>

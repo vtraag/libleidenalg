@@ -1,4 +1,4 @@
-#include <RBConfigurationVertexPartition.h>
+#include "RBConfigurationVertexPartition.h"
 
 RBConfigurationVertexPartition::RBConfigurationVertexPartition(Graph* graph,
       vector<size_t> const& membership, double resolution_parameter) :

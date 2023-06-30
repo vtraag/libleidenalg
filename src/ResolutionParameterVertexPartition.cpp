@@ -1,4 +1,4 @@
-#include <ResolutionParameterVertexPartition.h>
+#include "ResolutionParameterVertexPartition.h"
 
 ResolutionParameterVertexPartition::ResolutionParameterVertexPartition(Graph* graph,
       vector<size_t> membership, double resolution_parameter) :
