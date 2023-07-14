@@ -99,52 +99,6 @@ cmake --build .
 ```
 and run `./example`.
 
-# References
-
-Please cite the references appropriately in case they are used.
-
-[^1]:  Traag, V.A., Waltman. L., Van Eck, N.-J. (2018). From Louvain to
-       Leiden: guaranteeing well-connected communities. Scientific reports, 9(1), 5233.
-       [10.1038/s41598-019-41695-z](http://dx.doi.org/10.1038/s41598-019-41695-z)
-
-[^2]   Blondel, V. D., Guillaume, J.-L., Lambiotte, R., & Lefebvre, E. (2008).
-       Fast unfolding of communities in large networks. Journal of Statistical
-       Mechanics: Theory and Experiment, 10008(10), 6.
-       [10.1088/1742-5468/2008/10/P10008](http://doi.org/10.1088/1742-5468/2008/10/P10008)
-
-[^3]   Newman, M. E. J., & Girvan, M. (2004). Finding and evaluating community
-       structure in networks. Physical Review E, 69(2), 026113.
-       [10.1103/PhysRevE.69.026113](http://doi.org/10.1103/PhysRevE.69.026113)
-
-[^4]   Reichardt, J., & Bornholdt, S. (2006). Statistical mechanics of
-       community detection. Physical Review E, 74(1), 016110.
-       [10.1103/PhysRevE.74.016110](http://doi.org/10.1103/PhysRevE.74.016110)
-
-[^5]   Traag, V. A., Van Dooren, P., & Nesterov, Y. (2011). Narrow scope for
-       resolution-limit-free community detection. Physical Review E, 84(1),
-       1. [10.1103/PhysRevE.84.016114](http://doi.org/10.1103/PhysRevE.84.16114)
-
-[^6]   Traag, V. A., Krings, G., & Van Dooren, P. (2013). Significant scales in
-       community structure. Scientific Reports, 3, 2930. [10.1038/srep02930](http://doi.org/10.1038/srep02930)
-
-[^7]   Traag, V. A., Aldecoa, R., & Delvenne, J.-C. (2015). Detecting
-       communities using asymptotical surprise. Physical Review E, 92(2),
-       1. [10.1103/PhysRevE.92.022816](http://doi.org/10.1103/PhysRevE.92.022816)
-
-[^8]   Traag, V. A., & Bruggeman, J. (2009). Community detection in networks
-       with positive and negative links. Physical Review E, 80(3), 036115.
-       [10.1103/PhysRevE.80.036115](http://doi.org/10.1103/PhysRevE.80.036115)
-
-[^9]   Mucha, P. J., Richardson, T., Macon, K., Porter, M. A., & Onnela, J.-P.
-       (2010). Community structure in time-dependent, multiscale, and multiplex
-       networks. Science, 328(5980), 876–8. [10.1126/science.1184819](http://doi.org/10.1126/science.1184819)
-
-[^10]   Zanini, F., Berghuis, B. A., Jones, R. C., Robilant, B. N. di,
-        Nong, R. Y., Norton, J., Clarke, Michael F., Quake, S. R. (2019).
-        northstar: leveraging cell atlases to identify healthy and neoplastic
-        cells in transcriptomes from human tumors. BioRxiv, 820928.
-        [10.1101/820928](https://doi.org/10.1101/820928)
-
 Licence
 -------
 
@@ -162,3 +116,48 @@ PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see http://www.gnu.org/licenses/.
 
+# References
+
+Please cite the references appropriately in case they are used.
+
+[^1]:  Traag, V.A., Waltman. L., Van Eck, N.-J. (2018). From Louvain to
+       Leiden: guaranteeing well-connected communities. Scientific reports, 9(1), 5233.
+       [10.1038/s41598-019-41695-z](http://dx.doi.org/10.1038/s41598-019-41695-z)
+
+[^2]:  Blondel, V. D., Guillaume, J.-L., Lambiotte, R., & Lefebvre, E. (2008).
+       Fast unfolding of communities in large networks. Journal of Statistical
+       Mechanics: Theory and Experiment, 10008(10), 6.
+       [10.1088/1742-5468/2008/10/P10008](http://doi.org/10.1088/1742-5468/2008/10/P10008)
+
+[^3]:  Newman, M. E. J., & Girvan, M. (2004). Finding and evaluating community
+       structure in networks. Physical Review E, 69(2), 026113.
+       [10.1103/PhysRevE.69.026113](http://doi.org/10.1103/PhysRevE.69.026113)
+
+[^4]:  Reichardt, J., & Bornholdt, S. (2006). Statistical mechanics of
+       community detection. Physical Review E, 74(1), 016110.
+       [10.1103/PhysRevE.74.016110](http://doi.org/10.1103/PhysRevE.74.016110)
+
+[^5]:  Traag, V. A., Van Dooren, P., & Nesterov, Y. (2011). Narrow scope for
+       resolution-limit-free community detection. Physical Review E, 84(1),
+       1. [10.1103/PhysRevE.84.016114](http://doi.org/10.1103/PhysRevE.84.16114)
+
+[^6]:  Traag, V. A., Krings, G., & Van Dooren, P. (2013). Significant scales in
+       community structure. Scientific Reports, 3, 2930. [10.1038/srep02930](http://doi.org/10.1038/srep02930)
+
+[^7]:  Traag, V. A., Aldecoa, R., & Delvenne, J.-C. (2015). Detecting
+       communities using asymptotical surprise. Physical Review E, 92(2),
+       1. [10.1103/PhysRevE.92.022816](http://doi.org/10.1103/PhysRevE.92.022816)
+
+[^8]:  Traag, V. A., & Bruggeman, J. (2009). Community detection in networks
+       with positive and negative links. Physical Review E, 80(3), 036115.
+       [10.1103/PhysRevE.80.036115](http://doi.org/10.1103/PhysRevE.80.036115)
+
+[^9]:  Mucha, P. J., Richardson, T., Macon, K., Porter, M. A., & Onnela, J.-P.
+       (2010). Community structure in time-dependent, multiscale, and multiplex
+       networks. Science, 328(5980), 876–8. [10.1126/science.1184819](http://doi.org/10.1126/science.1184819)
+
+[^10]:  Zanini, F., Berghuis, B. A., Jones, R. C., Robilant, B. N. di,
+        Nong, R. Y., Norton, J., Clarke, Michael F., Quake, S. R. (2019).
+        northstar: leveraging cell atlases to identify healthy and neoplastic
+        cells in transcriptomes from human tumors. BioRxiv, 820928.
+        [10.1101/820928](https://doi.org/10.1101/820928)
