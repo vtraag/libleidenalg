@@ -119,7 +119,6 @@ class LIBLEIDENALG_EXPORT Graph
     inline int correct_self_loops() { return this->_correct_self_loops; };
     inline int is_weighted() { return this->_is_weighted; };
 
-    // Get weight of edge based on attribute (or 1.0 if there is none).
     inline double edge_weight(size_t e)
     {
       #ifdef DEBUG
@@ -141,11 +140,9 @@ class LIBLEIDENALG_EXPORT Graph
       return edge;
     }
 
-    // Get size of node based on attribute (or 1.0 if there is none).
     inline double node_size(size_t v)
     { return this->_node_sizes[v]; };
 
-    // Get self weight of node based on attribute (or set to 0.0 if there is none)
     inline double node_self_weight(size_t v)
     { return this->_node_self_weights[v]; };
 

@@ -3,13 +3,6 @@
 /****************************************************************************
   Create a new Optimiser object
 
-  Be sure to call
-
-  igraph_i_set_attribute_table(&igraph_cattribute_table);
-
-  before using this package, otherwise the attribute handling
-  will not be dealt with correctly.
-
   Parameters:
     consider_comms
                  -- Consider communities in a specific manner:
