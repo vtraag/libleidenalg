@@ -55,13 +55,49 @@ The build system uses CMake and follows the prototypical CMake build steps:
    cmake --build . --target install
    ```
 
-Note that this library depends on `igraph`, which you should install before. See https://igraph.org/c/doc/igraph-Installation.html for more details.
-
-If you have installed `igraph` in a non-standard location, CMake might not be able to find it automatically. You can then pass the `${INSTALL_LOCATION}/lib/cmake/igraph/` location to CMake using `-Digraph_ROOT=${INSTALL_LOCATION}/lib/cmake/igraph/`.
-
-Note that you can change the installation location of `libleidenalg` using [`CMAKE_INSTALL_PREFIX`](https://cmake.org/cmake/help/latest/variable/CMAKE_INSTALL_PREFIX.html) as usual.
+You can change the installation location of `libleidenalg` using [`CMAKE_INSTALL_PREFIX`](https://cmake.org/cmake/help/latest/variable/CMAKE_INSTALL_PREFIX.html) as usual.
 
 You can change whether a static or dynamic library should be built using [`BUILD_SHARED_LIBS`](https://cmake.org/cmake/help/latest/variable/BUILD_SHARED_LIBS.html) as usual.
+
+This library depends on `igraph`, which you should install before. See https://igraph.org/c/doc/igraph-Installation.html for more details.
+
+If you have installed `igraph` in a non-standard location, CMake might not be able to find it automatically. If you use `CMAKE_INSTALL_PATH=<dir>` to install `igraph`, you can specify the []`CMAKE_PREFIX_PATH=<dir>`](https://cmake.org/cmake/help/latest/variable/CMAKE_PREFIX_PATH.html) when configuring `libleidenalg` to find `igraph`.
+
+# Usage
+
+The `Optimiser` class is responsible for optimising a `MutableVertexPartition` (possibly multiple in the case of a multiplex approach). The `MutableVertexPartition` is just a base class, and should be implemented to provide explicit quality function:
+- `CPMVertexPartition`
+- `ModularityVertexPartition`
+- `RBConfigurationVertexPartition`
+- `RBERVertexPartition`
+- `SignificanceVertexPartition`
+- `SurpriseVertexPartition`
+
+Some of these classes depend on intermediate derived classes. The implementation of a quality function in a derived class, essentially comes to down implementing the `diff_move` and `quality`, see also [`CONTRIBUTING.md`](CONTRIBUTING.md) in this repository.
+
+An `igraph_t` object from `igraph` is used to construct a separate `Graph` object, which can be used to construct a `MutableVertexPartition`. For example, to find a partition using CPM, you could do the following
+
+```C
+    igraph_t g;
+    igraph_famous(&g, "Zachary");
+
+    Graph graph(&g);
+
+    CPMVertexPartition part(&graph,
+                            0.05 /* resolution */ );
+
+    Optimiser o;
+
+    o.optimise_partition(&part);
+```
+
+In the `example` directory, we added a complete example, including the CMake build files (please note that this directory is not included in the release source package, and only available on the GitHub repository). In order to compile it, first make sure you have properly installed `igraph` and `libleidenalg`. In the `example` directory, you can then follow the standard CMake routine to build it
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build .
+```
+and run `./example`.
 
 # References
 

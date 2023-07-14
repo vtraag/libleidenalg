@@ -3,3 +3,4 @@ vcpkg.json export-subst
 .gitignore export-ignore
 .gitattributes export-ignore
 .github/ export-ignore
+example/ export-ignore
