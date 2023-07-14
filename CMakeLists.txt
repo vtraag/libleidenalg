@@ -27,22 +27,37 @@ option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 add_subdirectory(src)
 add_subdirectory(include)
 
-configure_package_config_file(libleidenalgConfig.cmake.in "${PROJECT_BINARY_DIR}/libleidenalgConfig.cmake"
-INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/libleidenalg/cmake"
-PATH_VARS CMAKE_INSTALL_INCLUDEDIR CMAKE_INSTALL_LIBDIR)
-write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfigVersion.cmake" COMPATIBILITY SameMinorVersion)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfig.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfigVersion.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/libleidenalg/cmake"
-        COMPONENT dev)
+configure_package_config_file(
+  "${PROJECT_SOURCE_DIR}/libleidenalgConfig.cmake.in"
+  "${PROJECT_BINARY_DIR}/libleidenalgConfig.cmake"
+  INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/libleidenalg"
+  PATH_VARS CMAKE_INSTALL_INCLUDEDIR CMAKE_INSTALL_LIBDIR
+)
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfigVersion.cmake"
+  COMPATIBILITY SameMinorVersion)
+install(
+  FILES "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/libleidenalgConfigVersion.cmake"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/libleidenalg"
+  COMPONENT dev
+)
 
-export(TARGETS libleidenalg FILE "${PROJECT_BINARY_DIR}/libleidenalgTargets.cmake")
+export(
+  TARGETS libleidenalg
+  FILE "${PROJECT_BINARY_DIR}/libleidenalgTargets.cmake")
 export(PACKAGE libleidenalg)
 
- install(TARGETS libleidenalg
+ install(
+  TARGETS libleidenalg
   EXPORT libleidenalgTargets
   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT shlib
   FILE_SET headers
-    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/libleidenalg"
-    COMPONENT dev)
-install(EXPORT libleidenalgTargets DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/libleidenalg/cmake" FILE libleidenalgTargets.cmake)
+  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/libleidenalg" COMPONENT dev
+)
+install(
+  EXPORT libleidenalgTargets
+  FILE libleidenalgTargets.cmake
+  NAMESPACE libleidenalg::
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/libleidenalg"
+  )
