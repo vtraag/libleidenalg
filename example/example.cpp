@@ -25,4 +25,5 @@ int main()
     for (int i = 0; i < graph.vcount(); i++)
         cout << i << "\t" << part.membership(i) << endl;
 
+    igraph_destroy(&g);
 }
