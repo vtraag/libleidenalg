@@ -23,7 +23,7 @@ class LIBLEIDENALG_EXPORT ResolutionParameterVertexPartition : public MutableVer
 
     virtual double quality(double resolution_parameter)
     {
-      throw Exception("Function not implemented. This should be implented in a derived class, since the base class does not implement a specific method.");
+      throw Exception("Function not implemented. This should be implemented in a derived class, since the base class does not implement a specific method.");
     };
 
   private:
