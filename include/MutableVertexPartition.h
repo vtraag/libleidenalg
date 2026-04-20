@@ -42,7 +42,7 @@ Leiden method in the optimisation class can call these general functions in
 order to optimise the quality function.
 *****************************************************************************/
 
-class MutableVertexPartition
+class LIBLEIDENALG_EXPORT MutableVertexPartition
 {
   public:
     MutableVertexPartition(Graph* graph,
@@ -56,7 +56,7 @@ class MutableVertexPartition
     inline size_t membership(size_t v) { return this->_membership[v]; };
     inline vector<size_t> const& membership() const { return this->_membership; };
 
-    size_t csize(size_t comm);
+    double csize(size_t comm);
     size_t cnodes(size_t comm);
     vector<size_t> get_community(size_t comm);
     vector< vector<size_t> > get_communities();
@@ -65,11 +65,11 @@ class MutableVertexPartition
     void move_node(size_t v,size_t new_comm);
     virtual double diff_move(size_t v, size_t new_comm)
     {
-      throw Exception("Function not implemented. This should be implented in a derived class, since the base class does not implement a specific method.");
+      throw Exception("Function not implemented. This should be implemented in a derived class, since the base class does not implement a specific method.");
     };
     virtual double quality()
     {
-      throw Exception("Function not implemented. This should be implented in a derived class, since the base class does not implement a specific method.");
+      throw Exception("Function not implemented. This should be implemented in a derived class, since the base class does not implement a specific method.");
     };
 
     inline Graph* get_graph() { return this->graph; };
@@ -143,7 +143,7 @@ class MutableVertexPartition
     Graph* graph;
 
     // Community size
-    vector< size_t > _csize;
+    vector<double> _csize;
 
     // Number of nodes in community
     vector< size_t > _cnodes;

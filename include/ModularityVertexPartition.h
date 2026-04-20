@@ -1,9 +1,9 @@
 #ifndef MODULARITYVERTEXPARTITION_H
 #define MODULARITYVERTEXPARTITION_H
 
-#include <MutableVertexPartition.h>
+#include "MutableVertexPartition.h"
 
-class ModularityVertexPartition : public MutableVertexPartition
+class LIBLEIDENALG_EXPORT ModularityVertexPartition : public MutableVertexPartition
 {
   public:
     ModularityVertexPartition(Graph* graph,

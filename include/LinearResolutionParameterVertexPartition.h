@@ -1,9 +1,9 @@
 #ifndef LINEARRESOLUTIONPARAMETERVERTEXPARTITION_H
 #define LINEARRESOLUTIONPARAMETERVERTEXPARTITION_H
 
-#include <ResolutionParameterVertexPartition.h>
+#include "ResolutionParameterVertexPartition.h"
 
-class LinearResolutionParameterVertexPartition : public ResolutionParameterVertexPartition
+class LIBLEIDENALG_EXPORT LinearResolutionParameterVertexPartition : public ResolutionParameterVertexPartition
 {
   public:
     LinearResolutionParameterVertexPartition(Graph* graph,

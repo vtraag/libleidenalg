@@ -21,7 +21,7 @@ this diff_move. If no further improvement is possible, the graph is
 aggregated (collapse_graph) and the method is reiterated on that graph.
 ****************************************************************************/
 
-class Optimiser
+class LIBLEIDENALG_EXPORT Optimiser
 {
   public:
     Optimiser();

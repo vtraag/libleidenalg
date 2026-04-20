@@ -1,10 +1,10 @@
 #ifndef SIGNIFICANCEVERTEXPARTITION_H
 #define SIGNIFICANCEVERTEXPARTITION_H
 
-#include <MutableVertexPartition.h>
+#include "MutableVertexPartition.h"
 
 
-class SignificanceVertexPartition : public MutableVertexPartition
+class LIBLEIDENALG_EXPORT SignificanceVertexPartition : public MutableVertexPartition
 {
   public:
     SignificanceVertexPartition(Graph* graph, vector<size_t> const& membership);

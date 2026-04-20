@@ -1,9 +1,9 @@
 #ifndef RESOLUTIONPARAMETERVERTEXPARTITION_H
 #define RESOLUTIONPARAMETERVERTEXPARTITION_H
 
-#include <MutableVertexPartition.h>
+#include "MutableVertexPartition.h"
 
-class ResolutionParameterVertexPartition : public MutableVertexPartition
+class LIBLEIDENALG_EXPORT ResolutionParameterVertexPartition : public MutableVertexPartition
 {
   public:
     ResolutionParameterVertexPartition(Graph* graph,
@@ -23,7 +23,7 @@ class ResolutionParameterVertexPartition : public MutableVertexPartition
 
     virtual double quality(double resolution_parameter)
     {
-      throw Exception("Function not implemented. This should be implented in a derived class, since the base class does not implement a specific method.");
+      throw Exception("Function not implemented. This should be implemented in a derived class, since the base class does not implement a specific method.");
     };
 
   private:
