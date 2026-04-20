@@ -72,11 +72,11 @@ class LIBLEIDENALG_EXPORT Optimiser
     int consider_empty_community; // Determine whether to consider moving nodes to an empty community
     size_t min_comm_size; // Constraint the minimum community size.
     size_t max_comm_size; // Constrain the maximum community size.
-    double community_constraint_enforcement; // Control how strictly the comkmunity size constraints should be enforced.
+    double community_constraint_enforcement; // Control how strictly the community size constraints should be enforced.
 
     static const int ALL_COMMS = 1;       // Consider all communities for improvement.
     static const int ALL_NEIGH_COMMS = 2; // Consider all neighbour communities for improvement.
-    static const int RAND_COMM = 3;       // Consider a random commmunity for improvement.
+    static const int RAND_COMM = 3;       // Consider a random community for improvement.
     static const int RAND_NEIGH_COMM = 4; // Consider a random community among the neighbours for improvement.
 
     static const int MOVE_NODES = 10;  // Use move node routine
