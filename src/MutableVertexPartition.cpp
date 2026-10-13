@@ -901,18 +901,24 @@ vector<size_t> const& MutableVertexPartition::get_neigh_comms(size_t v, igraph_n
 vector<size_t> MutableVertexPartition::get_neigh_comms(size_t v, igraph_neimode_t mode, vector<size_t> const& constrained_membership)
 {
   vector<size_t> neigh_comms;
-  vector<bool> comm_added(this->n_communities(), false);
+  this->get_neigh_comms(v, mode, constrained_membership, neigh_comms);
+  return neigh_comms;
+}
+
+/****************************************************************************
+ Append the communities of all neighbours of v that are in the same
+ constrained community as v to neigh_comms. Communities are included once per
+ neighbour (i.e. including duplicates), so that a random draw from this list
+ is proportional to the number of neighbours in each community. (The previous
+ implementation allocated an unused vector<bool> of size n_communities() on
+ every call, which is O(n) per call at the first level of the refinement.)
+****************************************************************************/
+void MutableVertexPartition::get_neigh_comms(size_t v, igraph_neimode_t mode, vector<size_t> const& constrained_membership, vector<size_t>& neigh_comms)
+{
+  size_t v_constrained = constrained_membership[v];
   for (size_t u : this->graph->get_neighbours(v, mode))
   {
-    if (constrained_membership[v] == constrained_membership[u])
-    {
-      size_t comm = this->membership(u);
-      if (!comm_added[comm])
-      {
-        neigh_comms.push_back(comm);
-        comm_added[comm];
-      }
-    }
+    if (v_constrained == constrained_membership[u])
+      neigh_comms.push_back(this->_membership[u]);
   }
-  return neigh_comms;
 }
