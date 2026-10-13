@@ -552,7 +552,8 @@ double Optimiser::move_nodes(vector<MutableVertexPartition*> partitions, vector<
     throw Exception("Maximum community size is smaller than the minimum community size.");  
 
   // Fixed nodes are also stable nodes
-  vector<bool> is_node_stable(is_membership_fixed);
+  // Byte vectors instead of vector<bool>: avoids bit manipulation in the hot loop
+  vector<char> is_node_stable(is_membership_fixed.begin(), is_membership_fixed.end());
 
   // Establish vertex order
   // We normally initialize the normal vertex order
@@ -575,7 +576,7 @@ double Optimiser::move_nodes(vector<MutableVertexPartition*> partitions, vector<
   // (2) - The quality function should be exactly the same value after
   //       aggregating/collapsing the graph.
 
-  vector<bool> comm_added(partitions[0]->n_communities(), false);
+  vector<char> comm_added(partitions[0]->n_communities(), false);
   vector<size_t> comms;
 
   // As long as the queue is not empty
@@ -832,7 +833,7 @@ double Optimiser::merge_nodes(vector<MutableVertexPartition*> partitions, vector
   // But if we use a random order, we shuffle this order.
   shuffle(vertex_order, &rng);
 
-  vector<bool> comm_added(partitions[0]->n_communities(), false);
+  vector<char> comm_added(partitions[0]->n_communities(), false);
   vector<size_t> comms;
 
   // Iterate over all nodes
@@ -1038,7 +1039,7 @@ double Optimiser::move_nodes_constrained(vector<MutableVertexPartition*> partiti
   // Establish vertex order
   // We normally initialize the normal vertex order
   // of considering node 0,1,...
-  vector<bool> is_node_stable(n, false);
+  vector<char> is_node_stable(n, false);
   // But if we use a random order, we shuffle this order.
   vector<size_t> nodes = range(n);
   shuffle(nodes, &rng);
@@ -1054,7 +1055,7 @@ double Optimiser::move_nodes_constrained(vector<MutableVertexPartition*> partiti
   // (2) - The quality function should be exactly the same value after
   //       aggregating/collapsing the graph.
 
-  vector<bool> comm_added(partitions[0]->n_communities(), false);
+  vector<char> comm_added(partitions[0]->n_communities(), false);
   vector<size_t> comms;
   vector<size_t> all_neigh_comms_incl_dupes;
 
@@ -1286,7 +1287,7 @@ double Optimiser::merge_nodes_constrained(vector<MutableVertexPartition*> partit
 
   vector< vector<size_t> > constrained_comms = constrained_partition->get_communities();
 
-  vector<bool> comm_added(partitions[0]->n_communities(), false);
+  vector<char> comm_added(partitions[0]->n_communities(), false);
   vector<size_t> comms;
   vector<size_t> all_neigh_comms_incl_dupes;
 
