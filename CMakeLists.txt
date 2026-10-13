@@ -7,6 +7,13 @@ include(version)
 
 project(libleidenalg VERSION ${PACKAGE_VERSION_BASE})
 
+# Default to an optimised build. Without this, single-config generators
+# (e.g. Makefiles, as used by the wheel build scripts) compile with no
+# optimisation flags at all (-O0), which makes the library several times slower.
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(packaging)
