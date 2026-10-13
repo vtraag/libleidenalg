@@ -641,8 +641,8 @@ void MutableVertexPartition::move_node(size_t v,size_t new_comm)
     igraph_neimode_t mode = modes[mode_i];
 
     // Loop over all incident edges
-    vector<size_t> const& neighbours = this->graph->get_neighbours(v, mode);
-    vector<size_t> const& neighbour_edges = this->graph->get_neighbour_edges(v, mode);
+    IndexRange neighbours = this->graph->get_neighbours(v, mode);
+    IndexRange neighbour_edges = this->graph->get_neighbour_edges(v, mode);
 
     size_t degree = neighbours.size();
 
@@ -828,8 +828,8 @@ void MutableVertexPartition::cache_neigh_communities(size_t v, igraph_neimode_t 
        (*_cached_weight_tofrom_community)[c] = 0;
 
   // Loop over all incident edges
-  vector<size_t> const& neighbours = this->graph->get_neighbours(v, mode);
-  vector<size_t> const& neighbour_edges = this->graph->get_neighbour_edges(v, mode);
+  IndexRange neighbours = this->graph->get_neighbours(v, mode);
+  IndexRange neighbour_edges = this->graph->get_neighbour_edges(v, mode);
 
   size_t degree = neighbours.size();
 
