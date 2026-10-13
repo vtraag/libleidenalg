@@ -430,9 +430,12 @@ void Graph::init_admin()
 
   // Determine total weight in the graph.
   this->_total_weight = 0.0;
+  this->_has_nonzero_weights = false;
   for (size_t e = 0; e < m; e++) {
     double w = this->edge_weight(e);
     this->_total_weight += w;
+    if (w != 0)
+      this->_has_nonzero_weights = true;
 
     size_t from, to;
     this->edge(e, from, to);

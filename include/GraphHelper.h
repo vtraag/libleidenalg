@@ -151,6 +151,10 @@ class LIBLEIDENALG_EXPORT Graph
     inline double density() { return this->_density; };
     inline int correct_self_loops() { return this->_correct_self_loops; };
     inline int is_weighted() { return this->_is_weighted; };
+    // False if every edge has weight exactly zero (e.g. a layer that only
+    // carries node sizes in a multiplex optimisation). Edge loops can then be
+    // skipped, since they cannot change any weight-based administration.
+    inline bool has_nonzero_weights() { return this->_has_nonzero_weights; };
 
     inline double edge_weight(size_t e)
     {
@@ -246,6 +250,7 @@ class LIBLEIDENALG_EXPORT Graph
     double _total_weight;
     double _total_size;
     int _is_weighted;
+    bool _has_nonzero_weights;
     bool _is_directed;
 
     int _correct_self_loops;
