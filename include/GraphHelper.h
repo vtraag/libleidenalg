@@ -41,6 +41,22 @@ template <class T> T sum(vector<T> vec)
   return sum_of_elems;
 };
 
+// Lightweight read-only view on a contiguous range of indices (neighbours or
+// incident edges of a node), so that no copy is needed to iterate over them.
+class IndexRange
+{
+  public:
+    IndexRange() : _begin(NULL), _end(NULL) { }
+    IndexRange(const size_t* b, const size_t* e) : _begin(b), _end(e) { }
+    inline const size_t* begin() const { return _begin; }
+    inline const size_t* end() const { return _end; }
+    inline size_t size() const { return _end - _begin; }
+    inline size_t operator[](size_t i) const { return _begin[i]; }
+  private:
+    const size_t* _begin;
+    const size_t* _end;
+};
+
 class Exception : public std::exception
 {
   public:
@@ -99,8 +115,25 @@ class LIBLEIDENALG_EXPORT Graph
 
     Graph* collapse_graph(MutableVertexPartition* partition);
 
-    vector<size_t> const& get_neighbour_edges(size_t v, igraph_neimode_t mode);
-    vector<size_t> const& get_neighbours(size_t v, igraph_neimode_t mode);
+    // Neighbours and incident edges of v, in the same order as returned by
+    // igraph_incident(..., IGRAPH_LOOPS_TWICE). Stored in a compressed (CSR)
+    // structure that is built once per mode, on first use.
+    inline IndexRange get_neighbour_edges(size_t v, igraph_neimode_t mode)
+    {
+      size_t m = this->mode_index(mode);
+      if (!this->_csr_built[m])
+        this->build_csr(m);
+      const size_t* base = this->_csr_edges[m].data();
+      return IndexRange(base + this->_csr_offsets[m][v], base + this->_csr_offsets[m][v + 1]);
+    }
+    inline IndexRange get_neighbours(size_t v, igraph_neimode_t mode)
+    {
+      size_t m = this->mode_index(mode);
+      if (!this->_csr_built[m])
+        this->build_csr(m);
+      const size_t* base = this->_csr_neighs[m].data();
+      return IndexRange(base + this->_csr_offsets[m][v], base + this->_csr_offsets[m][v + 1]);
+    }
     size_t get_random_neighbour(size_t v, igraph_neimode_t mode, igraph_rng_t* rng);
 
     inline size_t get_random_node(igraph_rng_t* rng)
@@ -118,6 +151,10 @@ class LIBLEIDENALG_EXPORT Graph
     inline double density() { return this->_density; };
     inline int correct_self_loops() { return this->_correct_self_loops; };
     inline int is_weighted() { return this->_is_weighted; };
+    // False if every edge has weight exactly zero (e.g. a layer that only
+    // carries node sizes in a multiplex optimisation). Edge loops can then be
+    // skipped, since they cannot change any weight-based administration.
+    inline bool has_nonzero_weights() { return this->_has_nonzero_weights; };
 
     inline double edge_weight(size_t e)
     {
@@ -175,16 +212,27 @@ class LIBLEIDENALG_EXPORT Graph
     const igraph_t* _graph;
 
     void init_inclist_adjlist();
-    /* We use lazy inclist and adjlist so that we can easily get whatever
-     * we need, without needing additional memory.
+    /* Compressed adjacency (CSR) per mode: 0 = OUT, 1 = IN, 2 = ALL. For
+     * undirected graphs only ALL is used. Built lazily per mode, but for all
+     * nodes at once, so that iterating over neighbours never copies.
      */
-    igraph_lazy_inclist_t _inclist_in;
-    igraph_lazy_inclist_t _inclist_out;
-    igraph_lazy_inclist_t _inclist_all;
-
-    igraph_lazy_adjlist_t _adjlist_in;
-    igraph_lazy_adjlist_t _adjlist_out;
-    igraph_lazy_adjlist_t _adjlist_all;
+    inline size_t mode_index(igraph_neimode_t mode)
+    {
+      if (!this->_is_directed)
+        return 2; // igraph ignores mode for undirected graphs
+      switch (mode)
+      {
+        case IGRAPH_OUT: return 0;
+        case IGRAPH_IN:  return 1;
+        case IGRAPH_ALL: return 2;
+        default: throw Exception("Invalid mode for getting neighbours.");
+      }
+    }
+    void build_csr(size_t m);
+    bool _csr_built[3];
+    vector<size_t> _csr_offsets[3];
+    vector<size_t> _csr_neighs[3];
+    vector<size_t> _csr_edges[3];
 
     // Utility variables to easily access the strength of each node
     vector<double> _strength_in;
@@ -198,19 +246,11 @@ class LIBLEIDENALG_EXPORT Graph
     vector<double> _node_sizes; // Used for the size of the nodes.
     vector<double> _node_self_weights; // Used for the self weight of the nodes.
 
-    void cache_neighbours(size_t v, igraph_neimode_t mode);
-    vector<size_t> _cached_neighs_from; size_t _current_node_cache_neigh_from;
-    vector<size_t> _cached_neighs_to;   size_t _current_node_cache_neigh_to;
-    vector<size_t> _cached_neighs_all;  size_t _current_node_cache_neigh_all;
-
-    void cache_neighbour_edges(size_t v, igraph_neimode_t mode);
-    vector<size_t> _cached_neigh_edges_from; size_t _current_node_cache_neigh_edges_from;
-    vector<size_t> _cached_neigh_edges_to;   size_t _current_node_cache_neigh_edges_to;
-    vector<size_t> _cached_neigh_edges_all;  size_t _current_node_cache_neigh_edges_all;
 
     double _total_weight;
     double _total_size;
     int _is_weighted;
+    bool _has_nonzero_weights;
     bool _is_directed;
 
     int _correct_self_loops;

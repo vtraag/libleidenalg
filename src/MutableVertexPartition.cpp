@@ -636,13 +636,15 @@ void MutableVertexPartition::move_node(size_t v,size_t new_comm)
 
   // Use set for incident edges, because self loop appears twice
   igraph_neimode_t modes[2] = {IGRAPH_OUT, IGRAPH_IN};
-  for (size_t mode_i = 0; mode_i < 2; mode_i++)
+  // If all edge weights are zero, the edge loop below cannot change anything.
+  size_t n_modes = this->graph->has_nonzero_weights() ? 2 : 0;
+  for (size_t mode_i = 0; mode_i < n_modes; mode_i++)
   {
     igraph_neimode_t mode = modes[mode_i];
 
     // Loop over all incident edges
-    vector<size_t> const& neighbours = this->graph->get_neighbours(v, mode);
-    vector<size_t> const& neighbour_edges = this->graph->get_neighbour_edges(v, mode);
+    IndexRange neighbours = this->graph->get_neighbours(v, mode);
+    IndexRange neighbour_edges = this->graph->get_neighbour_edges(v, mode);
 
     size_t degree = neighbours.size();
 
@@ -827,9 +829,17 @@ void MutableVertexPartition::cache_neigh_communities(size_t v, igraph_neimode_t 
   for (size_t c : *_cached_neighs_comms)
        (*_cached_weight_tofrom_community)[c] = 0;
 
+  // If all edge weights are zero, all weights to/from communities are zero
+  // and no community gets listed, so we can skip the loop over the edges.
+  if (!this->graph->has_nonzero_weights())
+  {
+    _cached_neighs_comms->clear();
+    return;
+  }
+
   // Loop over all incident edges
-  vector<size_t> const& neighbours = this->graph->get_neighbours(v, mode);
-  vector<size_t> const& neighbour_edges = this->graph->get_neighbour_edges(v, mode);
+  IndexRange neighbours = this->graph->get_neighbours(v, mode);
+  IndexRange neighbour_edges = this->graph->get_neighbour_edges(v, mode);
 
   size_t degree = neighbours.size();
 
