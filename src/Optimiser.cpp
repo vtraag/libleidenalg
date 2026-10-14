@@ -552,7 +552,8 @@ double Optimiser::move_nodes(vector<MutableVertexPartition*> partitions, vector<
     throw Exception("Maximum community size is smaller than the minimum community size.");  
 
   // Fixed nodes are also stable nodes
-  vector<bool> is_node_stable(is_membership_fixed);
+  // Byte vectors instead of vector<bool>: avoids bit manipulation in the hot loop
+  vector<char> is_node_stable(is_membership_fixed.begin(), is_membership_fixed.end());
 
   // Establish vertex order
   // We normally initialize the normal vertex order
@@ -575,7 +576,7 @@ double Optimiser::move_nodes(vector<MutableVertexPartition*> partitions, vector<
   // (2) - The quality function should be exactly the same value after
   //       aggregating/collapsing the graph.
 
-  vector<bool> comm_added(partitions[0]->n_communities(), false);
+  vector<char> comm_added(partitions[0]->n_communities(), false);
   vector<size_t> comms;
 
   // As long as the queue is not empty
@@ -832,7 +833,7 @@ double Optimiser::merge_nodes(vector<MutableVertexPartition*> partitions, vector
   // But if we use a random order, we shuffle this order.
   shuffle(vertex_order, &rng);
 
-  vector<bool> comm_added(partitions[0]->n_communities(), false);
+  vector<char> comm_added(partitions[0]->n_communities(), false);
   vector<size_t> comms;
 
   // Iterate over all nodes
@@ -1038,7 +1039,7 @@ double Optimiser::move_nodes_constrained(vector<MutableVertexPartition*> partiti
   // Establish vertex order
   // We normally initialize the normal vertex order
   // of considering node 0,1,...
-  vector<bool> is_node_stable(n, false);
+  vector<char> is_node_stable(n, false);
   // But if we use a random order, we shuffle this order.
   vector<size_t> nodes = range(n);
   shuffle(nodes, &rng);
@@ -1054,8 +1055,9 @@ double Optimiser::move_nodes_constrained(vector<MutableVertexPartition*> partiti
   // (2) - The quality function should be exactly the same value after
   //       aggregating/collapsing the graph.
 
-  vector<bool> comm_added(partitions[0]->n_communities(), false);
+  vector<char> comm_added(partitions[0]->n_communities(), false);
   vector<size_t> comms;
+  vector<size_t> all_neigh_comms_incl_dupes;
 
   // As long as the queue is not empty
   while(!vertex_order.empty())
@@ -1115,12 +1117,9 @@ double Optimiser::move_nodes_constrained(vector<MutableVertexPartition*> partiti
         // Draw a random community among the neighbours, proportional to the
         // frequency of the communities among the neighbours. Notice this is no
         // longer
-        vector<size_t> all_neigh_comms_incl_dupes;
+        all_neigh_comms_incl_dupes.clear();
         for (size_t layer = 0; layer < nb_layers; layer++)
-        {
-          vector<size_t> neigh_comm_layer = partitions[layer]->get_neigh_comms(v, IGRAPH_ALL, constrained_partition->membership());
-          all_neigh_comms_incl_dupes.insert(all_neigh_comms_incl_dupes.end(), neigh_comm_layer.begin(), neigh_comm_layer.end());
-        }
+          partitions[layer]->get_neigh_comms(v, IGRAPH_ALL, constrained_partition->membership(), all_neigh_comms_incl_dupes);
         if (all_neigh_comms_incl_dupes.size() > 0)
         {
           size_t random_idx = get_random_int(0, all_neigh_comms_incl_dupes.size() - 1, &rng);
@@ -1288,8 +1287,9 @@ double Optimiser::merge_nodes_constrained(vector<MutableVertexPartition*> partit
 
   vector< vector<size_t> > constrained_comms = constrained_partition->get_communities();
 
-  vector<bool> comm_added(partitions[0]->n_communities(), false);
+  vector<char> comm_added(partitions[0]->n_communities(), false);
   vector<size_t> comms;
+  vector<size_t> all_neigh_comms_incl_dupes;
 
   // For each node
   for (size_t v : vertex_order)
@@ -1349,12 +1349,9 @@ double Optimiser::merge_nodes_constrained(vector<MutableVertexPartition*> partit
           // Draw a random community among the neighbours, proportional to the
           // frequency of the communities among the neighbours. Notice this is no
           // longer
-          vector<size_t> all_neigh_comms_incl_dupes;
+          all_neigh_comms_incl_dupes.clear();
           for (size_t layer = 0; layer < nb_layers; layer++)
-          {
-            vector<size_t> neigh_comm_layer = partitions[layer]->get_neigh_comms(v, IGRAPH_ALL, constrained_partition->membership());
-            all_neigh_comms_incl_dupes.insert(all_neigh_comms_incl_dupes.end(), neigh_comm_layer.begin(), neigh_comm_layer.end());
-          }
+            partitions[layer]->get_neigh_comms(v, IGRAPH_ALL, constrained_partition->membership(), all_neigh_comms_incl_dupes);
           size_t k = all_neigh_comms_incl_dupes.size();
           if (k > 0)
           {

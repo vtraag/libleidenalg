@@ -129,6 +129,7 @@ class LIBLEIDENALG_EXPORT MutableVertexPartition
 
     vector<size_t> const& get_neigh_comms(size_t v, igraph_neimode_t);
     vector<size_t> get_neigh_comms(size_t v, igraph_neimode_t mode, vector<size_t> const& constrained_membership);
+    void get_neigh_comms(size_t v, igraph_neimode_t mode, vector<size_t> const& constrained_membership, vector<size_t>& neigh_comms);
 
     // By delegating the responsibility for deleting the graph to the partition,
     // we no longer have to worry about deleting this graph.
